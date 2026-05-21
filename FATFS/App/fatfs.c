@@ -49,36 +49,9 @@ void MX_FATFS_Init(void)
   */
 DWORD get_fattime(void)
 {
-  uint8_t data[7];
-  uint16_t year;
-  uint8_t month, date, hour, min, sec;
-
-  if (HAL_I2C_Mem_Read(&hi2c1, (0x68 << 1), 0x00, I2C_MEMADD_SIZE_8BIT, data, 7, 100) != HAL_OK) {
-    return ((DWORD)(2026 - 1980U) << 25)
-         | ((DWORD)5 << 21)
-         | ((DWORD)15 << 16);
-  }
-
-  year  = 2000U + rtc_bcd_to_dec(data[6]);
-  month = rtc_bcd_to_dec(data[5] & 0x1F);
-  date  = rtc_bcd_to_dec(data[4] & 0x3F);
-  hour  = rtc_bcd_to_dec(data[2] & 0x3F);
-  min   = rtc_bcd_to_dec(data[1] & 0x7F);
-  sec   = rtc_bcd_to_dec(data[0] & 0x7F);
-
-  if (year < 1980U) year = 1980U;
-  if (month == 0 || month > 12) month = 1;
-  if (date == 0 || date > 31) date = 1;
-  if (hour > 23) hour = 0;
-  if (min > 59) min = 0;
-  if (sec > 59) sec = 0;
-
-  return ((DWORD)(year - 1980U) << 25)
-       | ((DWORD)month << 21)
-       | ((DWORD)date << 16)
-       | ((DWORD)hour << 11)
-       | ((DWORD)min << 5)
-       | ((DWORD)(sec / 2U));
+  /* USER CODE BEGIN get_fattime */
+  return 0;
+  /* USER CODE END get_fattime */
 }
 
 /* USER CODE BEGIN Application */

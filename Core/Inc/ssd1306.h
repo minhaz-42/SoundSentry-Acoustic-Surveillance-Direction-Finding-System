@@ -59,6 +59,14 @@ SDA        |PB7          |Serial data line
 //#define SSD1306_I2C_ADDR       0x7A
 #endif
 
+/**
+ * @brief Selects which I2C peripheral and OLED address the shared SSD1306
+ *        drawing buffer should update.
+ * @param hi2c: I2C handle to use for the next init/update/write calls
+ * @param address: SSD1306 I2C address, left aligned for STM32 HAL, e.g. 0x78
+ */
+void SSD1306_SelectI2C(I2C_HandleTypeDef *hi2c, uint8_t address);
+
 /* SSD1306 settings */
 /* SSD1306 width in pixels */
 #ifndef SSD1306_WIDTH

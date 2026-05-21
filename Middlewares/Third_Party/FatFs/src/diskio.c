@@ -171,8 +171,7 @@ DRESULT disk_ioctl (
   * @param  None
   * @retval Time in DWORD
   */
-DWORD get_fattime (void) __attribute__((weak));
-DWORD get_fattime (void)
+__weak DWORD get_fattime (void)
 {
   return 0;
 }
