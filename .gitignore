@@ -1,3 +1,9 @@
 # Local ESC-50 audio datasets
 ai/data/esc50_2k/
 ai/data/esc50_target/
+
+# Local/generated workspace files
+.DS_Store
+__pycache__/
+*.pyc
+paper/

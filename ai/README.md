@@ -30,8 +30,9 @@ forward without collecting manual samples right now.
 - `download_esc50_2k.py`
   Downloads all 2000 official ESC-50 clips and writes a 50-class manifest.
 - `train_esc50_full_model.py`
-  Trains the full 50-class embedded model and regenerates
-  `artifacts/starter_model.h`.
+  Trains the full 50-class model on all 2000 ESC-50 clips with log-mel/MFCC
+  features, writes `artifacts/esc50_full_model.joblib`, and records fold
+  validation in `artifacts/starter_model.json`.
 - `download_esc50_subset.py` and `train_starter_model.py`
   Legacy starter pipeline for the tiny subset. Keep these only for quick tests.
 
@@ -40,8 +41,12 @@ forward without collecting manual samples right now.
 After training, these files appear in `artifacts/`:
 
 - `starter_model.json`
-- `starter_model.h`
+- `esc50_full_model.joblib`
+- `esc50_2k_logmel_features.npz`
 - `feature_dump.csv`
+
+`starter_model.h` is still produced by the compact firmware-oriented training
+scripts, not by the 55%+ full-data trainer.
 
 ## How to use
 
@@ -51,13 +56,19 @@ After training, these files appear in `artifacts/`:
 python3 ai/download_esc50_2k.py
 ```
 
-2. Train the final 50-class compact model:
+2. Train the final 50-class high-accuracy model:
 
 ```bash
 python3 ai/train_esc50_full_model.py
 ```
 
-3. Rebuild the STM32 firmware so the regenerated `starter_model.h` is compiled into flash.
+3. Use `artifacts/starter_model.json` to inspect fold accuracy and
+   `artifacts/esc50_full_model.joblib` for desktop-side inference.
+
+The high-accuracy full model is not exported to `starter_model.h`, because it
+uses 1338 log-mel/MFCC features while the STM32 firmware currently computes the
+compact 11-feature vector. Use `train_starter_model.py` only when regenerating
+that compact firmware header.
 
 ## Important limitation
 
